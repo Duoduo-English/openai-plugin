@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: Duoduo English API for OpenAI
+  description: A plugin that allows the user to get practiced questions while using ChatGPT.".
+  version: 'v1'
+servers:
+  - url: http://localhost:5003
+paths:
+  /question/{username}:
+    get:
+      operationId: getQuestion
+      summary: Get question by category and id
+      parameters:
+      - in: query
+        name: category
+        schema:
+            type: string
+        required: true
+        description: The category of the question
+      - in: query
+        name: id
+        schema:
+            type: string
+        required: true
+        description: The id of the question
+      responses:
+        "200":
+          description: Question found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getQuestionResponse'
+    post:
+      operationId: verifyQuestion
+      summary: Verify the answer that user submitted the specific question by category and id
+      parameters:
+      - in: query
+        name: category
+        schema:
+            type: string
+        required: true
+        description: The category of the question
+      - in: query
+        name: id
+        schema:
+            type: string
+        required: true
+        description: The id of the question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifyQuestionRequest'
+      responses:
+        "200":
+          description: Question verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/verifyQuestionResponse'
+
+components:
+  schemas:
+    getQuestionResponse:
+      type: object
+      properties:
+        todos:
+          type: array
+          items:
+            type: string
+          description: The list of todos.
+    verifyQuestionResponse:
+      type: object
+      required:
+      - todo
+      properties:
+        todo:
+          type: string
+          description: The todo to add to the list.
+          required: true

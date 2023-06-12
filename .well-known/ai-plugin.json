@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Duoduo English",
+  "name_for_model": "DuoduoEnglish",
+  "description_for_human": "Learn and practice English for Duolingo English Test",
+  "description_for_model": "Assistant uses the Duoduo English plugin to get relevant English questions for users to practice. Assistant will reply with the following two MIME formats of question content: including text/plain, text/html.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "http://localhost:5003/openapi.yaml",
+    "has_user_authentication": false
+  },
+  "logo_url": "https://duoduo.college/logo512.png",
+  "contact_email": "duolingo@duoduo.college",
+  "legal_info_url": "https://duoduo.college/legal"
+}
