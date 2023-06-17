@@ -1,81 +1,81 @@
 openapi: 3.0.1
 info:
   title: Duoduo English API for OpenAI
-  description: A plugin that allows the user to get practiced questions while using ChatGPT.".
+  description: A plugin that allows the user to get practiced questions for Duolingo English Test.
   version: 'v1'
 servers:
-  - url: http://localhost:5003
+  - url: http://localhost:9091
 paths:
-  /question/{username}:
+  /openai/question/read_then_write:
     get:
-      operationId: getQuestion
-      summary: Get question by category and id
-      parameters:
-      - in: query
-        name: category
-        schema:
-            type: string
-        required: true
-        description: The category of the question
-      - in: query
-        name: id
-        schema:
-            type: string
-        required: true
-        description: The id of the question
+      operationId: getQuestionOfReadThenWrite
+      summary: "Get question of Read then Write (A.K.A 阅读写作 in Chinese) which is given 1-3 questions that user has to write a paragraph of answer, after submitted, as an AI English tutor gives out the reference answer and comments on your understanding for user's answer."
+      parameters: []
       responses:
         "200":
           description: Question found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getQuestionResponse'
-    post:
-      operationId: verifyQuestion
-      summary: Verify the answer that user submitted the specific question by category and id
-      parameters:
-      - in: query
-        name: category
-        schema:
-            type: string
-        required: true
-        description: The category of the question
-      - in: query
-        name: id
-        schema:
-            type: string
-        required: true
-        description: The id of the question
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/verifyQuestionRequest'
+                $ref: '#/components/schemas/getQuestionOfReadThenWrite'
+  /openai/question/writing_sample:
+    get:
+      operationId: getQuestionOfWritingSample
+      summary: "Get question of Writing Sample (A.K.A 写作样本 in Chinese) which is given 2-4 questions that user has to write a paragraph of answer, after submitted, as an AI English tutor gives out the reference answer and comments on your understanding for user's answer."
+      parameters: []
       responses:
         "200":
-          description: Question verified
+          description: Question found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/verifyQuestionResponse'
+                $ref: '#/components/schemas/getQuestionOfWritingSample'
+  /openai/question/listen_and_type:
+    get:
+      operationId: getQuestionOfListenAndType
+      summary: "Get question of Listen and Type (A.K.A 听写 in Chinese) which is given an audio that users write by listening from the audio, after submitted, as an AI English tutor gives out the reference answer."
+      parameters: []
+      responses:
+        "200":
+          description: Question found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getQuestionOfListenAndType'
 
 components:
   schemas:
-    getQuestionResponse:
+    getQuestionOfReadThenWrite:
       type: object
       properties:
-        todos:
-          type: array
-          items:
-            type: string
-          description: The list of todos.
-    verifyQuestionResponse:
-      type: object
-      required:
-      - todo
-      properties:
-        todo:
+        content:
           type: string
-          description: The todo to add to the list.
           required: true
+          description: Return the question content
+        reference_answer:
+          type: string
+          required: true
+          description: Return the reference answer to the given question 
+    getQuestionOfWritingSample:
+      type: object
+      properties:
+        content:
+          type: string
+          required: true
+          description: Return the question content
+        reference_answer:
+          type: string
+          required: true
+          description: Return the reference answer to the given question 
+    getQuestionOfListenAndType:
+      type: object
+      properties:
+        content:
+          type: string
+          required: true
+          description: Return the question content
+        reference_answer:
+          type: string
+          required: true
+          description: Return the reference answer to the given question 
+

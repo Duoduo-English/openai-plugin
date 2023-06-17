@@ -9,7 +9,7 @@
   },
   "api": {
     "type": "openapi",
-    "url": "http://localhost:5003/openapi.yaml",
+    "url": "http://localhost:9091/openapi.yaml",
     "has_user_authentication": false
   },
   "logo_url": "https://duoduo.college/logo512.png",
